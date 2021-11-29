@@ -47,7 +47,7 @@ Contrastive-aspect-label(0:negative;1:netrual;2:positive)
 a) Download the pytorch version pre-trained bert-base-uncased model and vocabulary from the link provided by huggingface. Then change the value of parameter --bert_model_dir to the directory of the bert model.
 you can get the pre-trained bert-base-uncased model in https://github.com/huggingface/transformers.
 
-b) Label enhancement method. For new data, additional supervised signals need to be obtained through label enhancement;  
+b) Label augment method. For new data, additional supervised signals need to be obtained through label augment;  
 &nbsp;&nbsp;&nbsp;&nbsp;i) Through BERT overfitting the training set, the acc can reach more than 97%;  
 &nbsp;&nbsp;&nbsp;&nbsp;ii) Replace aspect with other or mask, and get the emotional label of the aspect after replacing the aspect;  
 &nbsp;&nbsp;&nbsp;&nbsp;iii) Determine whether the output label is consistent with the real label, and fill in the aspect-dependent/aspect-invariant label for the data.  
@@ -84,7 +84,21 @@ For dataset,you can choose these dataset : "cl_acl2014_2X3" "cl_res2014_2X3" "cl
 ```sh
 bash run_test.sh
 ```
+For run_test.sh code, the testfname parameter needs to be changed to fit the existing best model.
+```angular2
 
+CUDA_VISIBLE_DEVICES=3 \
+  python train_cl.py \
+  --model_name bert_spc_cl \
+  --dataset cl_res2016_2X3 \
+  --num_epoch 50 \
+  --seed 755 \
+  --lr 2e-5 \
+  --is_test 1 \
+  --testfname bert_spc_cl_cl_res2016_2X3_val_type_cl2X3_acc_0.9253 \
+  --type cl2X3
+
+```
 
 ### Citation
 ```
@@ -119,6 +133,6 @@ or
 ```
 
 ### Credits
-* The code of this repository partly relies on [ABSA-PyTorch](https://github.com/songyouwei/ABSA-PyTorch).
-* We would like to express my gratitude to the authors of the [ABSA-PyTorch](https://github.com/songyouwei/ABSA-PyTorch) repository.
-* The Supervised Contrastive Loss devised in this paper is partly inspired by [Supervised Contrastive Learning (Khosla and Tian, et al.)](https://proceedings.neurips.cc/paper/2020/file/d89a66c7c80a29b1bdbab0f2a1a94af8-Paper.pdf), we would like to express my gratitude to the authors of this paper.
+The code of this repository partly relies on [ABSA-PyTorch](https://github.com/songyouwei/ABSA-PyTorch).   
+I would like to express my gratitude to the authors of the [ABSA-PyTorch](https://github.com/songyouwei/ABSA-PyTorch) repository.  
+Thanks for Khosla, Tian, and et al, this article was inspired by the paper [Supervised Contrastive Learning](https://arxiv.org/pdf/2004.11362.pdf).  
